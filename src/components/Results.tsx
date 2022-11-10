@@ -12,19 +12,20 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
   return items.map((item, index) => {
     let indexOfSnippet =
       item?._snippetResult?.content?.value?.indexOf("</mark>");
+
     let indexOfNextLine = item?._snippetResult?.content?.value?.indexOf(
       "\n",
       indexOfSnippet
     );
 
-    let thesubstring = item._snippetResult?.content?.value.substring(
+    let textSnippet = item._snippetResult?.content?.value.substring(
       0,
       indexOfNextLine
     ) as string;
 
-    let indexOfPrevLine = thesubstring.lastIndexOf("\n", indexOfSnippet - 100);
+    let indexOfPrevLine = textSnippet.lastIndexOf("\n", indexOfSnippet - 100);
 
-    thesubstring = thesubstring.substring(indexOfPrevLine, indexOfNextLine);
+    textSnippet = textSnippet.substring(indexOfPrevLine, indexOfNextLine);
 
     return {
       ...item,
@@ -32,7 +33,7 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
         ...item._snippetResult,
         content: {
           ...item._snippetResult?.content,
-          value: thesubstring,
+          value: `...${textSnippet}...`,
         },
       },
     };

@@ -6,6 +6,9 @@ module.exports = {
     "./node_modules/@america-transparente/ui/dist/**/*.js",
   ],
   theme: {
+    fontFamily: {
+      nunito: ["Nunito", "sans-serif"],
+    },
     extend: {
       colors: {
         primary: "#a21caf",
