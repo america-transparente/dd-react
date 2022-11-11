@@ -9,23 +9,25 @@ interface ResultsProps {
 }
 
 const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
-  return items.map((item, index) => {
+  return items.map((item) => {
+    // where end search key word is
     let indexOfSnippet =
       item?._snippetResult?.content?.value?.indexOf("</mark>");
-
+    // line break after search key word
     let indexOfNextLine = item?._snippetResult?.content?.value?.indexOf(
       "\n",
       indexOfSnippet
     );
+    // line break before search key word
+    let indexOfPrevLine = item._snippetResult?.content?.value?.lastIndexOf(
+      "\n",
+      indexOfSnippet
+    );
 
-    let textSnippet = item._snippetResult?.content?.value.substring(
-      0,
-      indexOfNextLine
-    ) as string;
-
-    let indexOfPrevLine = textSnippet.lastIndexOf("\n", indexOfSnippet - 100);
-
-    textSnippet = textSnippet.substring(indexOfPrevLine, indexOfNextLine);
+    let textSnippet = item._snippetResult?.content?.value?.substring(
+      indexOfPrevLine - 200,
+      indexOfNextLine + 100
+    );
 
     return {
       ...item,
@@ -33,7 +35,7 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
         ...item._snippetResult,
         content: {
           ...item._snippetResult?.content,
-          value: `...${textSnippet}...`,
+          value: `"...${textSnippet}..."`,
         },
       },
     };
@@ -47,10 +49,10 @@ function Results({ config }: ResultsProps) {
   });
 
   return (
-    <ul className="grid grid-cols-2 gap-4">
+    <ul className="grid lg:grid-cols-2 gap-4">
       {hits.map((hit, index) => (
         <li key={index} className="flex">
-          <HitCard hit={hit} />
+          <HitCard hit={hit as any} />
         </li>
       ))}
     </ul>
