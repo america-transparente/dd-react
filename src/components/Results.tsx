@@ -49,10 +49,14 @@ function Results({ config }: ResultsProps) {
   });
 
   return (
-    <ul className="grid lg:grid-cols-2 gap-4">
+    <ul className="grid md:grid-cols-2 gap-4">
       {hits.map((hit, index) => (
         <li key={index} className="flex">
-          <HitCard hit={hit as any} />
+          <HitCard
+            snippet={hit?._snippetResult?.content?.value as string}
+            id={hit.id as string}
+            date={hit.date as string}
+          />
         </li>
       ))}
     </ul>
