@@ -19,7 +19,7 @@ function HitCard({ snippet, id, date }: HitCardProps) {
     <Card>
       <div className="md:p-4 space-y-4 flex flex-col justify-between h-full">
         <p
-          className="italic font-merriweather text-sm md:text-base"
+          className="italic font-merriweather text-sm md:text-base break-words"
           dangerouslySetInnerHTML={{ __html: snippet }}
         />
         <div className="w-full flex justify-between items-center">
