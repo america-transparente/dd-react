@@ -5,12 +5,19 @@ import {
 } from "@america-transparente/ui/search";
 import HitCard from "./HitCard";
 import HitCardSkeleton from "../components/HitCardSkeleton";
+import Hit from "../interface/hit";
 
 interface ResultsProps {
   config?: UseInfiniteHitsProps;
 }
 
-const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
+function capitalizeTextSnippet(textSnippet: string) {
+  return textSnippet
+    .toLowerCase()
+    .replace(/(^|\s)\S/g, (firstLetter: string) => firstLetter.toUpperCase());
+}
+
+const tidyItems = (items: Hit[]) => {
   return items.map((item) => {
     // where end search key word is
     let indexOfSnippet =
@@ -26,10 +33,14 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
       indexOfSnippet
     );
 
-    let textSnippet = item._snippetResult?.content?.value?.substring(
+    let textSnippet: string = item._snippetResult.content.value.substring(
       indexOfPrevLine - 200,
       indexOfNextLine + 100
     );
+
+    // check if 60% or more of the text is in uppercase
+    let isTextUppercase =
+      textSnippet.match(/[A-Z]/g).length > textSnippet.length * 0.6;
 
     return {
       ...item,
@@ -37,7 +48,9 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
         ...item._snippetResult,
         content: {
           ...item._snippetResult?.content,
-          value: `"...${textSnippet}..."`,
+          value: `"...${
+            isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet
+          }..."`,
         },
       },
     };
@@ -77,7 +90,7 @@ function Results({ config }: ResultsProps) {
         {hits.map((hit, index) => (
           <li key={index} className="flex">
             <HitCard
-              snippet={hit?._snippetResult?.content?.value as string}
+              snippet={hit?._snippetResult?.content?.value}
               id={hit.id as string}
               date={hit.date as string}
             />
