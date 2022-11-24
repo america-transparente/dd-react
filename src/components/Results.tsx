@@ -40,10 +40,10 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
       indexOfNextLine + 100
     );
 
-    // check if 60% or more of the text is in uppercase
+    // check if 20% or more of the text is in uppercase
     const innerText = textSnippet.match(/[A-Z]/g);
     let isTextUppercase = innerText
-      ? innerText.length > textSnippet.length * 0.6
+      ? innerText.length > textSnippet.length * 0.2
       : false;
 
     return {
@@ -99,7 +99,8 @@ function Results({ config }: ResultsProps) {
               snippet={
                 snippetResult.content.value
               }
-              id={hit.id as string}
+              cve={hit.cve as string}
+              url={hit.url as string}
               date={hit.date as string}
             />
           </li>)
