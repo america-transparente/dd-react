@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import ArrowDownTrayIcon from "@heroicons/react/24/outline/esm/ArrowDownTrayIcon";
 import { Card, Button } from "@america-transparente/ui/core";
 
 interface HitCardProps {

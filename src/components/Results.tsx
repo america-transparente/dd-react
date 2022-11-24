@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import {
   useInfiniteHits,
-  UseInfiniteHitsProps,
+  type UseInfiniteHitsProps,
 } from "@america-transparente/ui/search";
 import HitCard from "./HitCard";
 import HitCardSkeleton from "../components/HitCardSkeleton";
