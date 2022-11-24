@@ -52,9 +52,8 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
         ...snippetResult,
         content: {
           ...snippetResult.content,
-          value: `"...${
-            isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet
-          }..."`,
+          value: `"...${isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet
+            }..."`,
         },
       },
     };
@@ -91,19 +90,20 @@ function Results({ config }: ResultsProps) {
     <>
       {results && <p>{results.nbHits} resultados encontrados.</p>}
       <ul className="grid md:grid-cols-2 gap-4">
-        {hits.map((hit, index) => (
-          <li key={index} className="flex">
+        {hits.map((hit, index) => {
+          const snippetResult = hit._snippetResult instanceof Array
+            ? hit._snippetResult[0]
+            : hit._snippetResult
+          return (<li key={index} className="flex">
             <HitCard
               snippet={
-                hit._snippetResult instanceof Array
-                  ? hit._snippetResult[0].content.value
-                  : hit._snippetResult?.content.value
+                snippetResult.content.value
               }
               id={hit.id as string}
               date={hit.date as string}
             />
-          </li>
-        ))}
+          </li>)
+        })}
       </ul>
       {results && results.nbHits > 20 && !isLastPage && (
         <div ref={targetRef} className="grid md:grid-cols-2 gap-4">
