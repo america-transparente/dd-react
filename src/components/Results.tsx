@@ -5,7 +5,6 @@ import {
 } from "@america-transparente/ui/search";
 import HitCard from "./HitCard";
 import HitCardSkeleton from "../components/HitCardSkeleton";
-import Hit from "../interface/hit";
 
 interface ResultsProps {
   config?: UseInfiniteHitsProps;
@@ -17,45 +16,44 @@ function capitalizeTextSnippet(textSnippet: string) {
     .replace(/(^|\s)\S/g, (firstLetter: string) => firstLetter.toUpperCase());
 }
 
-const tidyItems = (items: Hit[]) => {
+const tidyItems: UseInfiniteHitsProps['transformItems'] = (items) => {
   return items.map((item) => {
+
+    const snippetResult = (item._snippetResult instanceof Array) ? item._snippetResult[0] : item._snippetResult;
     // where end search key word is
-    let indexOfSnippet =
-      item?._snippetResult?.content?.value?.indexOf("</mark>");
+    let indexOfSnippet: number = snippetResult.content.value.indexOf("</mark>");
     // line break after search key word
-    let indexOfNextLine = item?._snippetResult?.content?.value?.indexOf(
+    let indexOfNextLine: number = snippetResult.content.value.indexOf(
       "\n",
       indexOfSnippet
     );
     // line break before search key word
-    let indexOfPrevLine = item._snippetResult?.content?.value?.lastIndexOf(
+    let indexOfPrevLine: number = snippetResult.content.value.lastIndexOf(
       "\n",
       indexOfSnippet
     );
 
-    let textSnippet: string = item._snippetResult.content.value.substring(
+    let textSnippet: string = snippetResult.content.value.substring(
       indexOfPrevLine - 200,
       indexOfNextLine + 100
     );
 
     // check if 60% or more of the text is in uppercase
-    let isTextUppercase =
-      textSnippet.match(/[A-Z]/g).length > textSnippet.length * 0.6;
+    const innerText = textSnippet.match(/[A-Z]/g);
+    let isTextUppercase = innerText ? innerText.length > textSnippet.length * 0.6 : false;
 
     return {
       ...item,
       _snippetResult: {
-        ...item._snippetResult,
+        ...snippetResult,
         content: {
-          ...item._snippetResult?.content,
-          value: `"...${
-            isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet
-          }..."`,
+          ...snippetResult.content,
+          value: `"...${isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet}..."`,
         },
       },
     };
   });
-};
+}
 
 function Results({ config }: ResultsProps) {
   const { hits, showMore, isLastPage, results } = useInfiniteHits({
@@ -90,7 +88,7 @@ function Results({ config }: ResultsProps) {
         {hits.map((hit, index) => (
           <li key={index} className="flex">
             <HitCard
-              snippet={hit?._snippetResult?.content?.value}
+              snippet={(hit._snippetResult instanceof Array) ? hit._snippetResult[0] : hit._snippetResult}
               id={hit.id as string}
               date={hit.date as string}
             />
