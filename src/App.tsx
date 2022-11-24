@@ -4,11 +4,14 @@ import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import Home from "./pages/Home";
 
 function App() {
-  const searchClient = instantMeiliSearch("http://localhost:7700");
+  const searchClient = instantMeiliSearch(
+    import.meta.env.VITE_MEILISEARCH_URL,
+    import.meta.env.VITE_MEILISEARCH_API_KEY
+    );
 
   return (
-    <InstantSearch searchClient={searchClient} indexName="muestras">
-      <Provider searchClient={searchClient} indexName="muestras">
+    <InstantSearch searchClient={searchClient} indexName={import.meta.env.VITE_MEILISEARCH_INDEX}>
+      <Provider searchClient={searchClient} indexName={import.meta.env.VITE_MEILISEARCH_INDEX}>
         <Home />
       </Provider>
     </InstantSearch>
