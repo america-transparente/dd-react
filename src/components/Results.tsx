@@ -16,10 +16,12 @@ function capitalizeTextSnippet(textSnippet: string) {
     .replace(/(^|\s)\S/g, (firstLetter: string) => firstLetter.toUpperCase());
 }
 
-const tidyItems: UseInfiniteHitsProps['transformItems'] = (items) => {
+const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
   return items.map((item) => {
-
-    const snippetResult = (item._snippetResult instanceof Array) ? item._snippetResult[0] : item._snippetResult;
+    const snippetResult =
+      item._snippetResult instanceof Array
+        ? item._snippetResult[0]
+        : item._snippetResult;
     // where end search key word is
     let indexOfSnippet: number = snippetResult.content.value.indexOf("</mark>");
     // line break after search key word
@@ -40,7 +42,9 @@ const tidyItems: UseInfiniteHitsProps['transformItems'] = (items) => {
 
     // check if 60% or more of the text is in uppercase
     const innerText = textSnippet.match(/[A-Z]/g);
-    let isTextUppercase = innerText ? innerText.length > textSnippet.length * 0.6 : false;
+    let isTextUppercase = innerText
+      ? innerText.length > textSnippet.length * 0.6
+      : false;
 
     return {
       ...item,
@@ -48,12 +52,14 @@ const tidyItems: UseInfiniteHitsProps['transformItems'] = (items) => {
         ...snippetResult,
         content: {
           ...snippetResult.content,
-          value: `"...${isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet}..."`,
+          value: `"...${
+            isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet
+          }..."`,
         },
       },
     };
   });
-}
+};
 
 function Results({ config }: ResultsProps) {
   const { hits, showMore, isLastPage, results } = useInfiniteHits({
@@ -88,7 +94,11 @@ function Results({ config }: ResultsProps) {
         {hits.map((hit, index) => (
           <li key={index} className="flex">
             <HitCard
-              snippet={(hit._snippetResult instanceof Array) ? hit._snippetResult[0] : hit._snippetResult}
+              snippet={
+                hit._snippetResult instanceof Array
+                  ? hit._snippetResult[0].content.value
+                  : hit._snippetResult?.content.value
+              }
               id={hit.id as string}
               date={hit.date as string}
             />
