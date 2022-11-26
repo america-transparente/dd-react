@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import {
   useInfiniteHits,
-  UseInfiniteHitsProps,
+  type UseInfiniteHitsProps,
 } from "@america-transparente/ui/search";
 import HitCard from "./HitCard";
 import HitCardSkeleton from "../components/HitCardSkeleton";
@@ -40,10 +40,10 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
       indexOfNextLine + 100
     );
 
-    // check if 60% or more of the text is in uppercase
+    // check if 20% or more of the text is in uppercase
     const innerText = textSnippet.match(/[A-Z]/g);
     let isTextUppercase = innerText
-      ? innerText.length > textSnippet.length * 0.6
+      ? innerText.length > textSnippet.length * 0.2
       : false;
 
     return {
@@ -52,9 +52,8 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
         ...snippetResult,
         content: {
           ...snippetResult.content,
-          value: `"...${
-            isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet
-          }..."`,
+          value: `"...${isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet
+            }..."`,
         },
       },
     };
@@ -91,19 +90,21 @@ function Results({ config }: ResultsProps) {
     <>
       {results && <p>{results.nbHits} resultados encontrados.</p>}
       <ul className="grid md:grid-cols-2 gap-4">
-        {hits.map((hit, index) => (
-          <li key={index} className="flex">
+        {hits.map((hit, index) => {
+          const snippetResult = hit._snippetResult instanceof Array
+            ? hit._snippetResult[0]
+            : hit._snippetResult
+          return (<li key={index} className="flex">
             <HitCard
               snippet={
-                hit._snippetResult instanceof Array
-                  ? hit._snippetResult[0].content.value
-                  : hit._snippetResult?.content.value
+                snippetResult.content.value
               }
-              id={hit.id as string}
+              cve={hit.cve as string}
+              url={hit.url as string}
               date={hit.date as string}
             />
-          </li>
-        ))}
+          </li>)
+        })}
       </ul>
       {results && results.nbHits > 20 && !isLastPage && (
         <div ref={targetRef} className="grid md:grid-cols-2 gap-4">
