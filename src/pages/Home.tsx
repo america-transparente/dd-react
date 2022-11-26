@@ -29,16 +29,10 @@ function Home() {
             <Results />
           </Suspense>
         ) : (
-          <div className="text-center font-bold text-lg py-16">
-            <p>
-              Recuerda que está plataforma esta en alpha, así que todavía puede
-              haber cosas que no funcionan como deberían.
-            </p>
-            <p>
-              Para hacer búsquedas exactas, rodea tu consulta en comillas dobles
-              (Ej: "Sebastián Piñera")
-            </p>
-          </div>
+          <p className="text-center font-bold text-lg py-16">
+            Para hacer búsquedas exactas, rodea tu consulta en comillas dobles
+            (Ej: "Sebastián Piñera")
+          </p>
         )}
       </main>
     </>

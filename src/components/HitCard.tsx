@@ -18,7 +18,7 @@ function HitCard({ snippet, cve, url, date }: HitCardProps) {
 
   return (
     <Card>
-      <div className="md:p-4 space-y-4 flex flex-col justify-between h-full">
+      <div className="p-4 space-y-4 flex flex-col justify-between h-full">
         <p
           className="italic font-merriweather text-sm md:text-base break-words"
           dangerouslySetInnerHTML={{ __html: snippet }}
@@ -31,7 +31,12 @@ function HitCard({ snippet, cve, url, date }: HitCardProps) {
             <p className="flex gap-1 text-grayscale-5 items-center">
               <abbr
                 title="Código de Verificación Electrónica"
-                className="decoration-dotted decoration-2">CVE</abbr>: {cve}</p>
+                className="decoration-dotted decoration-2"
+              >
+                CVE
+              </abbr>
+              : {cve}
+            </p>
           </div>
           <Button primary icon={true} href={url}>
             <ArrowDownTrayIcon className="h-6 w-6" />
