@@ -13,12 +13,27 @@ module.exports = {
     extend: {
       colors: {
         primary: "#a21caf",
-        grayscale: {
-          1: "#FFFFFF",
-          2: "#F2F2F2",
-          3: "#e7e5e4",
-          4: "#d1d1d1",
-          5: "#6E6E73",
+        light: {
+          neutral: {
+            100: "#D1D1D1",
+            200: "#F9F9F9",
+            300: "#E7E5E4",
+          },
+          text: {
+            100: "#171717",
+            200: "#707172",
+          },
+        },
+        dark: {
+          neutral: {
+            100: "#484848",
+            200: "#2F2F2F",
+            300: "#242424",
+          },
+          text: {
+            100: "#E4E4E4",
+            200: "#A0A0A0",
+          },
         },
       },
     },

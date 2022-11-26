@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import AmericaTransparenteLogo from "../assets/logo_white.webp";
+import atLogo from "../assets/at_logo.webp";
 const Results = lazy(() => import("../components/Results"));
 import { SearchBar } from "@america-transparente/ui/search";
 import { Header } from "@america-transparente/ui/core";
@@ -9,7 +9,16 @@ function Home() {
 
   return (
     <>
-      <Header title="Dueños Directos" imagePath={AmericaTransparenteLogo} />
+      <Header
+        title="Dueños Directos"
+        imagePath={atLogo}
+        description="Dueños Directos es un buscador 
+    de documentos del Diario Oficial
+    de Chile, que permite rápidamente
+    buscar entre miles de constituciones
+    y otros archivos legales de 
+    organizaciones."
+      />
       <main className="mx-auto max-w-6xl px-4 text-font font py-4 space-y-4">
         <SearchBar
           placeholder="Buscar"

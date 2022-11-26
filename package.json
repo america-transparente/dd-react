@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@america-transparente/ui": "^2.2.2",
+    "@america-transparente/ui": "^3.0.0",
     "@heroicons/react": "^2.0.13",
     "@meilisearch/instant-meilisearch": "^0.9.0",
     "react": "^18.2.0",
