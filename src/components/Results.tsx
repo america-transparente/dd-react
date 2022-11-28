@@ -23,26 +23,27 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
         ? item._snippetResult[0]
         : item._snippetResult;
     // where end search key word is
-    let indexOfSnippet: number = snippetResult.content.value.indexOf("</mark>");
+    const indexOfSnippet: number =
+      snippetResult.content.value.indexOf("</mark>");
     // line break after search key word
-    let indexOfNextLine: number = snippetResult.content.value.indexOf(
+    const indexOfNextLine: number = snippetResult.content.value.indexOf(
       "\n",
       indexOfSnippet
     );
     // line break before search key word
-    let indexOfPrevLine: number = snippetResult.content.value.lastIndexOf(
+    const indexOfPrevLine: number = snippetResult.content.value.lastIndexOf(
       "\n",
       indexOfSnippet
     );
 
-    let textSnippet: string = snippetResult.content.value.substring(
+    const textSnippet: string = snippetResult.content.value.substring(
       indexOfPrevLine - 200,
       indexOfNextLine + 100
     );
 
     // check if 20% or more of the text is in uppercase
     const innerText = textSnippet.match(/[A-Z]/g);
-    let isTextUppercase = innerText
+    const isTextUppercase = innerText
       ? innerText.length > textSnippet.length * 0.2
       : false;
 
@@ -52,8 +53,9 @@ const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
         ...snippetResult,
         content: {
           ...snippetResult.content,
-          value: `"...${isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet
-            }..."`,
+          value: `"...${
+            isTextUppercase ? capitalizeTextSnippet(textSnippet) : textSnippet
+          }..."`,
         },
       },
     };
@@ -89,25 +91,26 @@ function Results({ config }: ResultsProps) {
   return (
     <>
       {results && <p>{results.nbHits} resultados encontrados.</p>}
-      <ul className="grid md:grid-cols-2 gap-4">
+      <ul className="grid gap-4 md:grid-cols-2">
         {hits.map((hit, index) => {
-          const snippetResult = hit._snippetResult instanceof Array
-            ? hit._snippetResult[0]
-            : hit._snippetResult
-          return (<li key={index} className="flex">
-            <HitCard
-              snippet={
-                snippetResult.content.value
-              }
-              cve={hit.cve as string}
-              url={hit.url as string}
-              date={hit.date as string}
-            />
-          </li>)
+          const snippetResult =
+            hit._snippetResult instanceof Array
+              ? hit._snippetResult[0]
+              : hit._snippetResult;
+          return (
+            <li key={index} className="flex">
+              <HitCard
+                snippet={snippetResult.content.value}
+                cve={hit.cve as string}
+                url={hit.url as string}
+                date={hit.date as string}
+              />
+            </li>
+          );
         })}
       </ul>
       {results && results.nbHits > 20 && !isLastPage && (
-        <div ref={targetRef} className="grid md:grid-cols-2 gap-4">
+        <div ref={targetRef} className="grid gap-4 md:grid-cols-2">
           <HitCardSkeleton />
           <HitCardSkeleton />
         </div>

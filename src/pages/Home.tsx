@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import atLogo from "../assets/at_logo.webp";
 const Results = lazy(() => import("../components/Results"));
 import { SearchBar } from "@america-transparente/ui/search";
@@ -19,7 +19,7 @@ function Home() {
     y otros archivos legales de 
     organizaciones."
       />
-      <main className="mx-auto max-w-6xl px-4 text-font font py-4 space-y-4">
+      <main className="text-font font mx-auto max-w-6xl space-y-4 px-4 py-4">
         <SearchBar
           placeholder="Buscar"
           captureSearchedQuery={setSearchedQuery}
@@ -29,9 +29,9 @@ function Home() {
             <Results />
           </Suspense>
         ) : (
-          <p className="text-center font-bold text-lg py-16">
+          <p className="py-16 text-center text-lg font-bold">
             Para hacer búsquedas exactas, rodea tu consulta en comillas dobles
-            (Ej: "Sebastián Piñera")
+            (Ej: &quot;Sebastián Piñera&quot;)
           </p>
         )}
       </main>
