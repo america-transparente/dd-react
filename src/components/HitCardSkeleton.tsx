@@ -1,14 +1,14 @@
 function HitCardSkeleton() {
   return (
-    <div className="rounded-2xl border border-grayscale-3 bg-grayscale-2 p-4 shadow h-full min-h-64">
-      <div className="flex flex-col gap-4 animate-pulse mt-2">
-        <div className="h-6 bg-grayscale-4 rounded-2xl" />
-        <div className="h-6 bg-grayscale-4 rounded-2xl" />
-        <div className="h-6 bg-grayscale-4 rounded-2xl" />
+    <div className="min-h-64 h-full rounded-2xl border border-light-neutral-100 bg-light-neutral-200 p-4 shadow dark:border-dark-neutral-100 dark:bg-dark-neutral-200">
+      <div className="mt-2 flex animate-pulse flex-col gap-4">
+        <div className="h-6 rounded-2xl bg-light-neutral-100 dark:bg-dark-neutral-100" />
+        <div className="h-6 rounded-2xl bg-light-neutral-100 dark:bg-dark-neutral-100" />
+        <div className="h-6 rounded-2xl bg-light-neutral-100 dark:bg-dark-neutral-100" />
         <div className="space-y-4">
-          <div className="min-h-6 bg-grayscale-4 rounded-2xl" />
-          <div className="h-6 bg-grayscale-4 rounded-2xl w-52" />
-          <div className="h-6 bg-grayscale-4 rounded-2xl w-40" />
+          <div className="min-h-6 rounded-2xl bg-light-neutral-100 dark:bg-dark-neutral-100" />
+          <div className="h-6 w-52 rounded-2xl bg-light-neutral-100 dark:bg-dark-neutral-100" />
+          <div className="dark:bg-dark-neutral1200 h-6 w-40 rounded-2xl bg-light-neutral-100" />
         </div>
       </div>
     </div>
