@@ -8,7 +8,7 @@ function HitCardSkeleton() {
         <div className="space-y-4">
           <div className="min-h-6 rounded-2xl bg-light-neutral-100 dark:bg-dark-neutral-100" />
           <div className="h-6 w-52 rounded-2xl bg-light-neutral-100 dark:bg-dark-neutral-100" />
-          <div className="dark:bg-dark-neutral1200 h-6 w-40 rounded-2xl bg-light-neutral-100" />
+          <div className="h-6 w-40 rounded-2xl bg-light-neutral-100 dark:bg-dark-neutral-100" />
         </div>
       </div>
     </div>
