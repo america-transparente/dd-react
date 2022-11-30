@@ -1,7 +1,7 @@
 import { Suspense, lazy, useState } from "react";
 import atLogo from "../assets/at_logo.webp";
 const Results = lazy(() => import("../components/Results"));
-import { SearchBar } from "@america-transparente/ui/search";
+import { SearchBar, SearchFilter } from "@america-transparente/ui/search";
 import { Header } from "@america-transparente/ui/core";
 
 function Home() {
@@ -19,11 +19,13 @@ function Home() {
     y otros archivos legales de 
     organizaciones."
       />
-      <main className="text-font font mx-auto max-w-6xl space-y-4 px-4 py-4">
-        <SearchBar
-          placeholder="Buscar"
-          captureSearchedQuery={setSearchedQuery}
-        />
+      <main className="text-font font mx-auto max-w-6xl px-4">
+        <div className="sticky top-0 z-50 bg-light-neutral-300/80 bg-clip-padding py-4 backdrop-blur-sm backdrop-filter dark:bg-dark-neutral-300/80">
+          <SearchBar
+            placeholder="Buscar"
+            captureSearchedQuery={setSearchedQuery}
+          />
+        </div>
         {searchedQuery ? (
           <Suspense fallback={<p className="text-center">Cargando...</p>}>
             <Results />

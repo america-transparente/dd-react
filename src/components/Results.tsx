@@ -91,7 +91,7 @@ function Results({ config }: ResultsProps) {
   return (
     <>
       {results && <p>{results.nbHits} resultados encontrados.</p>}
-      <ul className="grid gap-4 md:grid-cols-2">
+      <ul className="grid gap-4 py-4 md:grid-cols-2">
         {hits.map((hit, index) => {
           const snippetResult =
             hit._snippetResult instanceof Array
