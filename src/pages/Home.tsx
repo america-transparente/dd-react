@@ -1,16 +1,41 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import atLogo from "../assets/at_logo.webp";
 const Results = lazy(() => import("../components/Results"));
-import { SearchBar, SearchFilter } from "@america-transparente/ui/search";
-import { Header } from "@america-transparente/ui/core";
+import { SearchBar } from "@america-transparente/ui/search";
+import { Header, DonationCard } from "@america-transparente/ui/core";
 
 function Home() {
   const [searchedQuery, setSearchedQuery] = useState("");
+
+  const [theme, setTheme] = useState("");
+  const [showDonationCard, setShowDonationCard] = useState(false);
+
+  const halfAnHourInMilliseconds = 30 * 60000;
+
+  useEffect(() => {
+    const donationPopup = setTimeout(() => {
+      setShowDonationCard(true);
+    }, halfAnHourInMilliseconds);
+    return () => clearInterval(donationPopup);
+  }, []);
+
+  useEffect(() => {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
 
   return (
     <>
       <Header
         title="Dueños Directos"
+        captureThemeChange={setTheme}
         imagePath={atLogo}
         description="Dueños Directos es un buscador 
     de documentos del Diario Oficial
@@ -27,7 +52,13 @@ function Home() {
           />
         </div>
         {searchedQuery ? (
-          <Suspense fallback={<p className="text-center">Cargando...</p>}>
+          <Suspense
+            fallback={
+              <p className="text-center text-xl text-light-text-100 dark:text-dark-text-100">
+                Cargando...
+              </p>
+            }
+          >
             <Results />
           </Suspense>
         ) : (
@@ -37,6 +68,12 @@ function Home() {
           </p>
         )}
       </main>
+      {showDonationCard && (
+        <DonationCard
+          showDonationCard={showDonationCard}
+          setShowDonationCard={setShowDonationCard}
+        />
+      )}
     </>
   );
 }

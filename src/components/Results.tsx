@@ -10,10 +10,31 @@ interface ResultsProps {
   config?: UseInfiniteHitsProps;
 }
 
+function toUppercaseByIndex(text: string, index: number) {
+  return (
+    text.substring(0, index) +
+    text[index].toUpperCase() +
+    text.substring(index + 1)
+  );
+}
+
 function capitalizeTextSnippet(textSnippet: string) {
-  return textSnippet
+  let formattedText = textSnippet
     .toLowerCase()
     .replace(/(^|\s)\S/g, (firstLetter: string) => firstLetter.toUpperCase());
+
+  // indexes of character AFTER <mark>, there might be more than one ocurrence of the searched query
+  const highlightTag = "<mark>";
+  const indexesOfSearchQueryOcurrence = [
+    ...formattedText.matchAll(new RegExp(highlightTag, "gi")),
+  ].map(({ index }) => (index ? index + highlightTag.length : index));
+
+  // capitalize search query in text snippet
+  indexesOfSearchQueryOcurrence.forEach((value) => {
+    if (value) formattedText = toUppercaseByIndex(formattedText, value);
+  });
+
+  return formattedText;
 }
 
 const tidyItems: UseInfiniteHitsProps["transformItems"] = (items) => {
@@ -76,7 +97,7 @@ function Results({ config }: ResultsProps) {
   const options = {
     root: null,
     rootMargin: "0px",
-    threshold: 0.5, // percentage of how much the targetRef element is visible for fetchHits to trigger
+    threshold: 0.1, // percentage of how much the targetRef element is visible for fetchHits to trigger
   };
 
   useEffect(() => {
