@@ -10,7 +10,7 @@ interface ResultsProps {
   config?: UseInfiniteHitsProps;
 }
 
-function toUppercaseByIndex(text: string, index: number) {
+function capitalizeCharInStringByIndex(text: string, index: number) {
   return (
     text.substring(0, index) +
     text[index].toUpperCase() +
@@ -25,14 +25,18 @@ function capitalizeTextSnippet(textSnippet: string) {
 
   // indexes of character AFTER <mark>, there might be more than one ocurrence of the searched query
   const highlightTag = "<mark>";
-  const indexesOfSearchQueryOcurrence = [
-    ...formattedText.matchAll(new RegExp(highlightTag, "gi")),
-  ].map(({ index }) => (index ? index + highlightTag.length : index));
-
-  // capitalize search query in text snippet
-  indexesOfSearchQueryOcurrence.forEach((value) => {
-    if (value) formattedText = toUppercaseByIndex(formattedText, value);
-  });
+  [...formattedText.matchAll(new RegExp(highlightTag, "gi"))].forEach(
+    ({ index }) => {
+      // capitalize search query in text snippet
+      const indexOfSearchQuery = index ? index + highlightTag.length : index;
+      if (indexOfSearchQuery) {
+        formattedText = capitalizeCharInStringByIndex(
+          formattedText,
+          indexOfSearchQuery
+        );
+      }
+    }
+  );
 
   return formattedText;
 }
