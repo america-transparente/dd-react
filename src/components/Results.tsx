@@ -94,7 +94,7 @@ function Results({ config }: ResultsProps) {
   });
 
   const targetRef = useRef(null);
-  function fetchHits(entries: any) {
+  function fetchHits(entries: IntersectionObserverEntry[]) {
     const [targetRefEntry] = entries;
     if (!isLastPage) targetRefEntry.isIntersecting && showMore(); // when targetRef element visible trigger showMore
   }
