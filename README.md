@@ -29,4 +29,4 @@ npm run build
 
 ## Contributors
 
-- René Cáceres ([@panquequelol](https://github.com/panquequelol/) - Re-wrote [the legacy front-end app](https://github.com/america-transparente/df-app) to React and developed [America Transparente React Component Library](https://github.com/america-transparente/ui).
+- René Cáceres ([@panquequelol](https://github.com/panquequelol/)) - Re-wrote [the legacy front-end app](https://github.com/america-transparente/df-app) to React and developed [America Transparente React Component Library](https://github.com/america-transparente/ui).
