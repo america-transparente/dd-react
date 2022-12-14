@@ -3,20 +3,31 @@ import atLogo from "../assets/at_logo.webp";
 const Results = lazy(() => import("../components/Results"));
 import { SearchBar } from "@america-transparente/ui/search";
 import { Header, DonationCard } from "@america-transparente/ui/core";
+import WarningModal from "../components/WarningModal";
 
 function Home() {
   const [searchedQuery, setSearchedQuery] = useState("");
 
   const [theme, setTheme] = useState("");
   const [showDonationCard, setShowDonationCard] = useState(false);
+  const [showWarningCard, setShowWarningCard] = useState(false);
 
   const halfAnHourInMilliseconds = 30 * 60000;
+  const tenSecondsInMilliseconds = 10 * 1000;
 
   useEffect(() => {
     const donationPopup = setTimeout(() => {
       setShowDonationCard(true);
     }, halfAnHourInMilliseconds);
-    return () => clearInterval(donationPopup);
+
+    const warningPopup = setTimeout(() => {
+      setShowWarningCard(true);
+    }, tenSecondsInMilliseconds);
+
+    return () => {
+      clearInterval(donationPopup);
+      clearInterval(warningPopup);
+    };
   }, []);
 
   useEffect(() => {
@@ -72,6 +83,12 @@ function Home() {
         <DonationCard
           showDonationCard={showDonationCard}
           setShowDonationCard={setShowDonationCard}
+        />
+      )}
+      {showWarningCard && (
+        <WarningModal
+          displayCard={showWarningCard}
+          setDisplayCard={setShowWarningCard}
         />
       )}
     </>
